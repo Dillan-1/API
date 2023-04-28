@@ -30,6 +30,12 @@ let getData = function() {
     fetchDataBtn.addEventListener('click', getData)
 
 
+
+
+
+
+
+
 async function fetchBanks() {
     let result = await fetch('https://api.blublu.io/public/banks');
     return result.json();
@@ -40,9 +46,13 @@ async function init() {
     if (bankResults.success != true) {
         return alert("Nope, could not fetch results");
     }
+    renderBanks(bankResults.banks);
+}
 
+function renderBanks(banks) {
     for (let bank of bankResults.banks) {
-        console.log(bank);
+        document.body.innerHTML+= '<div id="theBankName"><input type="button" id="bankz" value="'+ bank.bank_name +'"></div>';
+        document.body.innerHTML+= '<div id="codes"><input style="display:none" type="text" value = "Code: '+bank.code+'"</div>'
     }
 }
 
