@@ -8,8 +8,8 @@ let getData = function() {
           result.innerText = JSON.stringify(data,null, 2)
           document.body.innerHTML = '';    
       for (let bank of data.banks) {
-        document.body.innerHTML+= '<div id = theBankName><input type="button" id = bankz value="'+ bank.bank_name +'"></div>';
-        document.body.innerHTML+= '<div id = codes><input type="text" value = "Code: '+bank.code+'"</div>'
+        document.body.innerHTML+= '<div id="theBankName"><input type="button" id="bankz" value="'+ bank.bank_name +'"></div>';
+        document.body.innerHTML+= '<div id="codes"><input style="display:none" type="text" value = "Code: '+bank.code+'"</div>'
             }
 
             let targetDiv = document.getElementById("codes");
@@ -28,3 +28,23 @@ let getData = function() {
 
         .catch(error => console.log(error))}
     fetchDataBtn.addEventListener('click', getData)
+
+
+async function fetchBanks() {
+    let result = await fetch('https://api.blublu.io/public/banks');
+    return result.json();
+}
+
+async function init() {
+    let bankResults = await fetchBanks();
+    if (bankResults.success != true) {
+        return alert("Nope, could not fetch results");
+    }
+
+    for (let bank of bankResults.banks) {
+        console.log(bank);
+    }
+}
+
+
+init();
